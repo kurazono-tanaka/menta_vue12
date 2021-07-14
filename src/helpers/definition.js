@@ -1,14 +1,15 @@
 'use strict';
 
 const addTask = ({ todos, task }) => {
-  const todo = {};
-  todo.id = todos.length;
-  todo.task = task;
-  todo.status = '作業中';
+  const todo = {
+    id: todos.length,
+    task,
+    status: '作業中',
+  };
   todos.push(todo);
 
   return {
-    addTodos: todos,
+    todosAdd: todos,
   };
 };
 
@@ -19,7 +20,7 @@ const deleteTask = ({ todos, _index }) => {
   });
 
   return {
-    deleteTodos: todos,
+    todosDelete: todos,
   };
 };
 

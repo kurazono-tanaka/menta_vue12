@@ -14,14 +14,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="obj in filterTodos" :key="obj.id">
-          <td>{{ obj.id }}</td>
-          <td>{{ obj.task }}</td>
+        <tr v-for="todo in todosFilter" :key="todo.id">
+          <td>{{ todo.id }}</td>
+          <td>{{ todo.task }}</td>
           <td>
-            <button @click="statusTask(obj.id)">{{ obj.status }}</button>
+            <button @click="workTask(todo.id)">{{ todo.status }}</button>
           </td>
           <td>
-            <button @click="deleteTask(obj.id)">削除</button>
+            <button @click="deleteTask(todo.id)">削除</button>
           </td>
         </tr>
       </tbody>
@@ -54,7 +54,7 @@ export default {
         todos: this.todos,
         task: this.inputTask,
       });
-      this.todos = obj.addTodos;
+      this.todos = obj.todosAdd;
       this.inputTask = '';
       this.$refs.focusThis.focus();
     },
@@ -63,9 +63,9 @@ export default {
         todos: this.todos,
         _index: index,
       });
-      this.todos = obj.deleteTodos;
+      this.todos = obj.todosDelete;
     },
-    statusTask(index) {
+    workTask(index) {
       if (this.todos[index].status === '作業中') {
         this.todos[index].status = '完了';
       } else if (this.todos[index].status === '完了') {
@@ -74,16 +74,14 @@ export default {
     },
   },
   computed: {
-    filterTodos() {
-      let todos = [];
+    todosFilter() {
       if (this.filter === 'すべて') {
-        todos = this.todos;
+        return this.todos;
       } else if (this.filter === '作業中') {
-        todos = this.todos.filter((todo) => todo.status === '作業中');
+        return this.todos.filter((todo) => todo.status === '作業中');
       } else if (this.filter === '完了') {
-        todos = this.todos.filter((todo) => todo.status === '完了');
+        return this.todos.filter((todo) => todo.status === '完了');
       }
-      return todos;
     },
   },
 };
